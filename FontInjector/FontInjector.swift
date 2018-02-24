@@ -11,6 +11,7 @@ import UIKit
 public enum FontExtension: String {
     case ttf = ".ttf"
     case otf = ".otf"
+    case fnt = ".fnt"
 }
 
 public protocol FontPackage: Hashable, RawRepresentable {
