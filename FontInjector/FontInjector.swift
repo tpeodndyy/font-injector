@@ -14,14 +14,31 @@ public enum FontExtension: String {
     case fnt = ".fnt"
 }
 
+/**
+ Protocol that descipe the information of each Font.
+ There are default implementation for some variable and function already.
+ Required variable that need to be override are `fileName`, `fontPath` and `fontExtension`
+ 
+ */
 public protocol FontPackage: Hashable, RawRepresentable {
-    
-    static var familyName: String { get }
     
     var fileName: String { get }
     var fontPath: String { get }
     var fontExtension: FontExtension { get }
     
+    /**
+     
+     Identifier of the font, default implementation will take the element name
+     of the class itself as identifier. This value suppose to be unique identifier
+     between multiple font. The lastest font registered with the same name will be
+     used.
+     
+     */
+    static var familyName: String { get }
+    
+    /**
+     Register this font. n
+ */
     static func register(fromBundle bundle: Bundle?)
     static func dynamicFont(textStyle: FontTextStyle, weight: UIFont.Weight) -> UIFont
     static func font(ofSize size: CGFloat, weight: UIFont.Weight) -> UIFont
@@ -95,4 +112,27 @@ public class FontInjector: NSObject {
     }
 }
 
+extension UIFont.Weight {
+    
+    static var mappingKeys: [UIFont.Weight: String] {
+        return [.ultraLight: "ultraLight",
+                .thin: "thin",
+                .light: "light",
+                .regular: "regular",
+                .medium: "medium",
+                .semibold: "semibold",
+                .bold: "bold",
+                .heavy: "heavy",
+                .black: "black"]
+    }
+    
+    static var all: [UIFont.Weight] {
+        return Array(mappingKeys.keys)
+    }
+    
+    var key: String? {
+        return UIFont.Weight.mappingKeys[self]
+    }
+    
+}
 

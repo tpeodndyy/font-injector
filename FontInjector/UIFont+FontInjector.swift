@@ -8,6 +8,13 @@
 
 import UIKit
 
+/**
+ 
+ Wrapper of `UIFontTextStyle` for iOS9 competible to allow `largeTitle`
+ to be represented. This enumeration will be used instead of the system
+ old for `FontInjectable` methods.
+ 
+ */
 public enum FontTextStyle: Int {
     
     case largeTitle = 0
@@ -22,7 +29,7 @@ public enum FontTextStyle: Int {
     case caption1
     case caption2
     
-    var systemFontTextStyle: UIFontTextStyle? {
+    internal var systemFontTextStyle: UIFontTextStyle? {
         return [FontTextStyle.title1: UIFontTextStyle.title1,
                 FontTextStyle.title2: UIFontTextStyle.title2,
                 FontTextStyle.title3: UIFontTextStyle.title3,
@@ -35,6 +42,9 @@ public enum FontTextStyle: Int {
                 FontTextStyle.caption2: UIFontTextStyle.caption2][self]
     }
     
+    /**
+     Get `preferredFont` value font size.
+     */
     public var dynamicPointSize: CGFloat {
         if let systemFontTextStyle = systemFontTextStyle {
             return UIFont.preferredFont(forTextStyle: systemFontTextStyle).pointSize
@@ -46,30 +56,6 @@ public enum FontTextStyle: Int {
             return 52
         }
         return 16
-    }
-    
-}
-
-extension UIFont.Weight {
-    
-    static var mappingKeys: [UIFont.Weight: String] {
-        return [.ultraLight: "ultraLight",
-                .thin: "thin",
-                .light: "light",
-                .regular: "regular",
-                .medium: "medium",
-                .semibold: "semibold",
-                .bold: "bold",
-                .heavy: "heavy",
-                .black: "black"]
-    }
-    
-    static var all: [UIFont.Weight] {
-        return Array(mappingKeys.keys)
-    }
-   
-    var key: String? {
-        return UIFont.Weight.mappingKeys[self]
     }
     
 }
